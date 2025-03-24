@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
-import { Copy, RefreshCw } from "lucide-react";
+import { RegenerateButton } from "@/components/ui/regenerate-button";
 import { useCallback, useEffect, useState } from "react";
 
 function generateMongoIdFromTimestamp(timestamp: Date): string {
@@ -46,12 +46,6 @@ export function MongoidTimestampCard() {
 		setMongoid(value);
 	};
 
-	const handleCopy = () => {
-		navigator.clipboard.writeText(
-			generateTimestampFromMongoId(mongoid).toISOString(),
-		);
-	};
-
 	return (
 		<Card className="w-full">
 			<CardHeader>
@@ -65,14 +59,7 @@ export function MongoidTimestampCard() {
 						placeholder="Enter MongoDB ObjectId"
 						className="font-mono"
 					/>
-					<Button
-						onClick={generateNewId}
-						variant="outline"
-						size="icon"
-						className="shrink-0"
-					>
-						<RefreshCw className="h-4 w-4" />
-					</Button>
+					<RegenerateButton onClick={generateNewId} />
 				</div>
 				<div className="flex gap-2">
 					<Input
@@ -81,14 +68,9 @@ export function MongoidTimestampCard() {
 						placeholder="Timestamp will appear here"
 						className="font-mono text-lg"
 					/>
-					<Button
-						onClick={handleCopy}
-						variant="outline"
-						size="icon"
-						className="shrink-0"
-					>
-						<Copy className="h-4 w-4" />
-					</Button>
+					<CopyButton
+						value={generateTimestampFromMongoId(mongoid).toISOString()}
+					/>
 				</div>
 			</CardContent>
 		</Card>

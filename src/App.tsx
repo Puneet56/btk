@@ -1,11 +1,11 @@
 import "./App.css";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
-import { UuidGenerator } from "./components/UuidGenerator";
 import { MongoidTimestampCard } from "./features/mongoid-timestamp/MongoidTimestampCard";
 import { QrGeneratorCard } from "./features/qr-generator/QrGeneratorCard";
 import { UrlDecoderCard } from "./features/url-decoder/UrlDecoderCard";
 import { UtcTimeCard } from "./features/utc-time/UtcTimeCard";
+import { UuidGenerator } from "./features/uuid-generator/UuidGenerator";
 
 function App() {
 	return (

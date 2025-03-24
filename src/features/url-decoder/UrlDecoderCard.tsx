@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
+import { RegenerateButton } from "@/components/ui/regenerate-button";
 import { cn } from "@/lib/utils";
-import { Copy, RefreshCw } from "lucide-react";
 import { useState } from "react";
 
 export function UrlDecoderCard({ className }: { className?: string }) {
@@ -17,10 +17,6 @@ export function UrlDecoderCard({ className }: { className?: string }) {
 		} catch (error) {
 			setDecoded("");
 		}
-	};
-
-	const handleCopy = () => {
-		navigator.clipboard.writeText(decoded);
 	};
 
 	const handleGenerate = () => {
@@ -46,22 +42,11 @@ export function UrlDecoderCard({ className }: { className?: string }) {
 						placeholder="Enter URL encoded string"
 						className="font-mono"
 					/>
-					<Button
+					<RegenerateButton
 						onClick={handleGenerate}
-						variant="outline"
-						size="icon"
-						className="shrink-0"
-					>
-						<RefreshCw className="h-4 w-4" />
-					</Button>
-					<Button
-						onClick={handleCopy}
-						variant="outline"
-						size="icon"
-						className="shrink-0"
-					>
-						<Copy className="h-4 w-4" />
-					</Button>
+						tooltipTitle="Generate sample URL"
+					/>
+					<CopyButton value={decoded} tooltipTitle="Copy decoded URL" />
 				</div>
 				<div className="flex justify-center">
 					{decoded && (

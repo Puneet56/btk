@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
-import { Copy, RefreshCw } from "lucide-react";
+import { RegenerateButton } from "@/components/ui/regenerate-button";
 import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
 
@@ -10,10 +10,6 @@ export function QrGeneratorCard() {
 
 	const handleUrlChange = (value: string) => {
 		setUrl(value);
-	};
-
-	const handleCopy = () => {
-		navigator.clipboard.writeText(url);
 	};
 
 	const handleGenerate = () => {
@@ -36,22 +32,11 @@ export function QrGeneratorCard() {
 						placeholder="Enter URL"
 						className="font-mono"
 					/>
-					<Button
+					<RegenerateButton
 						onClick={handleGenerate}
-						variant="outline"
-						size="icon"
-						className="shrink-0"
-					>
-						<RefreshCw className="h-4 w-4" />
-					</Button>
-					<Button
-						onClick={handleCopy}
-						variant="outline"
-						size="icon"
-						className="shrink-0"
-					>
-						<Copy className="h-4 w-4" />
-					</Button>
+						tooltipTitle="Generate random URL"
+					/>
+					<CopyButton value={url} tooltipTitle="Copy URL" />
 				</div>
 				<div className="flex justify-center">
 					{url && (
