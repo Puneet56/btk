@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 import { Copy, RefreshCw } from "lucide-react";
 import { useState } from "react";
 
-export function UrlDecoderCard() {
+export function UrlDecoderCard({ className }: { className?: string }) {
 	const [encoded, setEncoded] = useState<string>("");
 	const [decoded, setDecoded] = useState<string>("");
 
@@ -33,7 +34,7 @@ export function UrlDecoderCard() {
 	};
 
 	return (
-		<Card className="w-full">
+		<Card className={cn("w-full", className)}>
 			<CardHeader>
 				<CardTitle>URL Decoder</CardTitle>
 			</CardHeader>

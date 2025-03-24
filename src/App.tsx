@@ -14,7 +14,7 @@ function App() {
 					<UtcTimeCard />
 					<MongoidTimestampCard />
 					<QrGeneratorCard />
-					<UrlDecoderCard />
+					<UrlDecoderCard className="col-span-2" />
 				</div>
 			</main>
 		</div>
