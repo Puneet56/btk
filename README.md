@@ -4,11 +4,9 @@ A collection of useful tools for backend developers. Built with React, TypeScrip
 
 ## Features
 
-### Time Tools
 - **UTC Time Display**: Shows current time in UTC format with copy functionality
 - **MongoDB ID to Timestamp**: Convert MongoDB ObjectIds to human-readable timestamps
-
-### Encoding Tools
+- **UUID Generator**: Generate UUIDs for unique identifiers
 - **URL Decoder**: Decode URL-encoded strings with real-time preview
 - **QR Code Generator**: Generate QR codes from URLs with copy functionality
 
