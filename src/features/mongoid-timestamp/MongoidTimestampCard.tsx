@@ -17,6 +17,9 @@ function generateMongoIdFromTimestamp(timestamp: Date): string {
 }
 
 function generateTimestampFromMongoId(mongoid: string): Date {
+	if (mongoid.length !== 24) {
+		return new Date();
+	}
 	// Extract timestamp from first 8 characters of MongoDB ID
 	const timestampHex = mongoid.substring(0, 8);
 	// Convert hex to decimal and then to milliseconds
