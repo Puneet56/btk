@@ -5,7 +5,7 @@ import { ThemeToggle } from "./ThemeToggle";
 export function Header() {
 	return (
 		<header className="w-full border-b bg-background">
-			<div className="container flex items-center justify-between p-4">
+			<div className="flex items-center justify-between p-4">
 				<div className="flex items-center gap-2">
 					<Wrench className="h-6 w-6" />
 					<h1 className="text-xl font-bold">BTK: Backend Toolkit</h1>

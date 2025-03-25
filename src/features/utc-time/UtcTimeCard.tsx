@@ -9,7 +9,7 @@ export function UtcTimeCard() {
 	useEffect(() => {
 		const updateTime = () => {
 			const now = new Date();
-			setUtcTime(now.toUTCString());
+			setUtcTime(now.toISOString());
 		};
 
 		// Update immediately

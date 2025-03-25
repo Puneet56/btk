@@ -2,11 +2,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
 import { RegenerateButton } from "@/components/ui/regenerate-button";
+import { GITHUB_PROFILE_URL } from "@/constants/urls";
+import { cn } from "@/lib/utils";
 import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
 
-export function QrGeneratorCard() {
-	const [url, setUrl] = useState<string>("");
+function generateRandomUrl() {
+	return `https://example.com/${Math.random().toString(36).substring(7)}`;
+}
+
+export function QrGeneratorCard({ className }: { className?: string }) {
+	const [url, setUrl] = useState<string>(GITHUB_PROFILE_URL);
 
 	const handleUrlChange = (value: string) => {
 		setUrl(value);
@@ -15,12 +21,12 @@ export function QrGeneratorCard() {
 	const handleGenerate = () => {
 		// Generate a random URL if empty
 		if (!url) {
-			setUrl(`https://example.com/${Math.random().toString(36).substring(7)}`);
+			setUrl(generateRandomUrl());
 		}
 	};
 
 	return (
-		<Card className="w-full">
+		<Card className={cn("w-full", className)}>
 			<CardHeader>
 				<CardTitle>URL to QR Code</CardTitle>
 			</CardHeader>
@@ -40,10 +46,10 @@ export function QrGeneratorCard() {
 				</div>
 				<div className="flex justify-center">
 					{url && (
-						<div className="p-4 bg-white rounded-lg">
+						<div className="p-2 bg-white rounded-lg w-full h-full">
 							<QRCodeSVG
 								value={url}
-								size={200}
+								className="w-full h-full"
 								level="H"
 								includeMargin={true}
 							/>

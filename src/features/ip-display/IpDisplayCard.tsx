@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
+import { API_ENDPOINTS } from "@/constants/urls";
 import { useQuery } from "@tanstack/react-query";
 
 interface IpResponse {
@@ -8,12 +9,12 @@ interface IpResponse {
 }
 
 const fetchIpv4 = async (): Promise<IpResponse> => {
-	const response = await fetch("https://api.ipify.org?format=json");
+	const response = await fetch(API_ENDPOINTS.IPV4_API);
 	return response.json();
 };
 
 const fetchIpv6 = async (): Promise<IpResponse> => {
-	const response = await fetch("https://api64.ipify.org?format=json");
+	const response = await fetch(API_ENDPOINTS.IPV6_API);
 	return response.json();
 };
 
@@ -37,7 +38,7 @@ export const IpDisplayCard = () => {
 	return (
 		<Card className="w-full">
 			<CardHeader>
-				<CardTitle>IP Addresses</CardTitle>
+				<CardTitle>IP Details</CardTitle>
 			</CardHeader>
 			<CardContent className="space-y-4">
 				<div className="space-y-2">

@@ -47,7 +47,7 @@ export function MongoidTimestampCard() {
 	};
 
 	return (
-		<Card className="w-full">
+		<Card className="">
 			<CardHeader>
 				<CardTitle>MongoDB ID to Timestamp</CardTitle>
 			</CardHeader>
