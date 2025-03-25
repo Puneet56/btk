@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
 import { RegenerateButton } from "@/components/ui/regenerate-button";
-import { GITHUB_PROFILE_URL } from "@/constants/urls";
+import { GITHUB_REPO_URL } from "@/constants/urls";
 import { cn } from "@/lib/utils";
 import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
@@ -12,7 +12,7 @@ function generateRandomUrl() {
 }
 
 export function QrGeneratorCard({ className }: { className?: string }) {
-	const [url, setUrl] = useState<string>(GITHUB_PROFILE_URL);
+	const [url, setUrl] = useState<string>(GITHUB_REPO_URL);
 
 	const handleUrlChange = (value: string) => {
 		setUrl(value);

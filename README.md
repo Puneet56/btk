@@ -11,6 +11,7 @@ A collection of handy tools for developers built with React, TypeScript, and Tai
 - QR Code Generator
 - IP Display
 - IP Info Lookup
+- Json Prettifier
 
 ## Tech Stack
 
