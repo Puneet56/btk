@@ -9,6 +9,8 @@ A collection of useful tools for backend developers. Built with React, TypeScrip
 - **UUID Generator**: Generate UUIDs for unique identifiers
 - **URL Decoder**: Decode URL-encoded strings with real-time preview
 - **QR Code Generator**: Generate QR codes from URLs with copy functionality
+- **Random UUID Generator**: Generate random UUID
+- **IP Display**: Shows your IPv4 and IPv6 addresses using ipify API
 
 ### UI Features
 - Dark/Light mode support

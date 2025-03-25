@@ -1,6 +1,7 @@
 import "./App.css";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
+import { IpDisplayCard } from "./features/ip-display/IpDisplayCard";
 import { MongoidTimestampCard } from "./features/mongoid-timestamp/MongoidTimestampCard";
 import { QrGeneratorCard } from "./features/qr-generator/QrGeneratorCard";
 import { UrlDecoderCard } from "./features/url-decoder/UrlDecoderCard";
@@ -18,6 +19,7 @@ function App() {
 					<QrGeneratorCard />
 					<UrlDecoderCard className="col-span-2" />
 					<UuidGenerator />
+					<IpDisplayCard />
 				</div>
 			</main>
 			<Footer />
