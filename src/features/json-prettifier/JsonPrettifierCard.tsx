@@ -42,7 +42,7 @@ export function JsonPrettifierCard({ className }: JsonPrettifierCardProps) {
 						<Textarea
 							id="json-input"
 							placeholder="Paste your JSON here..."
-							className="min-h-[500px] font-mono"
+							className="h-[600px] font-mono resize-none overflow-y-scroll"
 							value={input}
 							onChange={(e) => {
 								setInput(e.target.value);
@@ -58,7 +58,7 @@ export function JsonPrettifierCard({ className }: JsonPrettifierCardProps) {
 							id="json-output"
 							readOnly
 							className={cn(
-								"min-h-[500px] font-mono",
+								"h-[600px] font-mono resize-none overflow-y-scroll",
 								error ? "border-red-500" : output ? "border-green-500" : "",
 							)}
 							value={error || output}

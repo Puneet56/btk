@@ -12,30 +12,26 @@ interface IpResponse {
 }
 
 interface IpInfo {
-	query: string;
-	status: string;
+	ipVersion: number;
+	ipAddress: string;
+	latitude: number;
+	longitude: number;
+	countryName: string;
+	countryCode: string;
+	timeZone: string;
+	zipCode: string;
+	cityName: string;
+	regionName: string;
 	continent: string;
 	continentCode: string;
-	country: string;
-	countryCode: string;
-	region: string;
-	regionName: string;
-	city: string;
-	district: string;
-	zip: string;
-	lat: number;
-	lon: number;
-	timezone: string;
-	offset: number;
-	currency: string;
-	isp: string;
-	org: string;
-	as: string;
-	asname: string;
-	reverse: string;
-	mobile: boolean;
-	proxy: boolean;
-	hosting: boolean;
+	isProxy: boolean;
+	currency: {
+		code: string;
+		name: string;
+	};
+	language: string;
+	timeZones: string[];
+	tlds: string[];
 }
 
 const fetchIpv4 = async (): Promise<IpResponse> => {
@@ -48,14 +44,7 @@ const fetchIpInfo = async (ip: string): Promise<IpInfo> => {
 	if (!response.ok) {
 		throw new Error("Failed to fetch IP info");
 	}
-	const data = await response.json();
-
-	// Check if the API returned a failure response
-	if (data.status === "fail") {
-		throw new Error(data.message || "Invalid IP address");
-	}
-
-	return data;
+	return response.json();
 };
 
 interface IpInfoCardProps {
@@ -81,30 +70,26 @@ export function IpInfoCard({ className }: IpInfoCardProps) {
 		enabled: !!targetIp,
 		retry: false,
 		placeholderData: {
-			query: "127.0.0.1",
-			status: "success",
+			ipVersion: 4,
+			ipAddress: "127.0.0.1",
+			latitude: 0,
+			longitude: 0,
+			countryName: "Unknown",
+			countryCode: "Unknown",
+			timeZone: "Unknown",
+			zipCode: "Unknown",
+			cityName: "Unknown",
+			regionName: "Unknown",
 			continent: "Unknown",
 			continentCode: "Unknown",
-			country: "Unknown",
-			countryCode: "Unknown",
-			region: "Unknown",
-			regionName: "Unknown",
-			city: "Unknown",
-			district: "Unknown",
-			zip: "Unknown",
-			lat: 0,
-			lon: 0,
-			timezone: "Unknown",
-			offset: 0,
-			currency: "Unknown",
-			isp: "Unknown",
-			org: "Unknown",
-			as: "Unknown",
-			asname: "Unknown",
-			reverse: "Unknown",
-			mobile: false,
-			proxy: false,
-			hosting: false,
+			isProxy: false,
+			currency: {
+				code: "Unknown",
+				name: "Unknown",
+			},
+			language: "Unknown",
+			timeZones: [],
+			tlds: [],
 		},
 	});
 
@@ -157,15 +142,15 @@ export function IpInfoCard({ className }: IpInfoCardProps) {
 							</div>
 							<div className="grid grid-cols-2 gap-2 text-sm pl-7">
 								<div className="font-medium">City</div>
-								<div>{data.city}</div>
+								<div>{data.cityName}</div>
 								<div className="font-medium">Region</div>
 								<div>{data.regionName}</div>
 								<div className="font-medium">Country</div>
-								<div>{`${data.country} (${data.countryCode})`}</div>
+								<div>{`${data.countryName} (${data.countryCode})`}</div>
 								<div className="font-medium">Coordinates</div>
-								<div>{`${data.lat}, ${data.lon}`}</div>
+								<div>{`${data.latitude}, ${data.longitude}`}</div>
 								<div className="font-medium">ZIP Code</div>
-								<div>{data.zip}</div>
+								<div>{data.zipCode}</div>
 							</div>
 						</div>
 
@@ -176,14 +161,12 @@ export function IpInfoCard({ className }: IpInfoCardProps) {
 								<span>Network Information</span>
 							</div>
 							<div className="grid grid-cols-2 gap-2 text-sm pl-7">
-								<div className="font-medium">ISP</div>
-								<div>{data.isp}</div>
-								<div className="font-medium">Organization</div>
-								<div>{data.org}</div>
-								<div className="font-medium">AS</div>
-								<div>{data.as}</div>
-								<div className="font-medium">Reverse DNS</div>
-								<div className="break-all">{data.reverse}</div>
+								<div className="font-medium">IP Address</div>
+								<div>{data.ipAddress}</div>
+								<div className="font-medium">IP Version</div>
+								<div>IPv{data.ipVersion}</div>
+								<div className="font-medium">Proxy</div>
+								<div>{data.isProxy ? "Yes" : "No"}</div>
 							</div>
 						</div>
 
@@ -195,19 +178,15 @@ export function IpInfoCard({ className }: IpInfoCardProps) {
 							</div>
 							<div className="grid grid-cols-2 gap-2 text-sm pl-7">
 								<div className="font-medium">Timezone</div>
-								<div>{data.timezone}</div>
+								<div>{data.timeZone}</div>
 								<div className="font-medium">Currency</div>
-								<div>{data.currency}</div>
-								<div className="font-medium">Connection Type</div>
-								<div>
-									{data.mobile
-										? "Mobile"
-										: data.hosting
-											? "Hosting"
-											: "Regular"}
-								</div>
-								<div className="font-medium">Proxy/VPN</div>
-								<div>{data.proxy ? "Yes" : "No"}</div>
+								<div>{`${data.currency.name} (${data.currency.code})`}</div>
+								<div className="font-medium">Language</div>
+								<div>{data.language}</div>
+								<div className="font-medium">Continent</div>
+								<div>{`${data.continent} (${data.continentCode})`}</div>
+								<div className="font-medium">TLDs</div>
+								<div>{data.tlds.join(", ")}</div>
 							</div>
 						</div>
 					</div>

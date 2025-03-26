@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { Clipboard } from "./components/Clipboard";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { ScrollToBottom } from "./components/ScrollToBottom";
@@ -19,6 +20,7 @@ function App() {
 			</main>
 			<Footer />
 			<ScrollToBottom />
+			<Clipboard />
 		</div>
 	);
 }
