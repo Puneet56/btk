@@ -1,6 +1,15 @@
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CopyButton } from "@/components/ui/copy-button";
 import { Textarea } from "@/components/ui/textarea";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { Minimize2 } from "lucide-react";
 import { useState } from "react";
 
 interface JsonPrettifierCardProps {
@@ -28,6 +37,17 @@ export function JsonPrettifierCard({ className }: JsonPrettifierCardProps) {
 		}
 	};
 
+	const minifyJson = () => {
+		try {
+			if (!input.trim()) return;
+			const parsed = JSON.parse(input);
+			setInput(JSON.stringify(parsed));
+			formatJson(JSON.stringify(parsed));
+		} catch (err) {
+			// Don't update input if it's invalid JSON
+		}
+	};
+
 	return (
 		<Card className={cn("col-span-2", className)}>
 			<CardHeader>
@@ -36,9 +56,31 @@ export function JsonPrettifierCard({ className }: JsonPrettifierCardProps) {
 			<CardContent>
 				<div className="grid grid-cols-2 gap-8">
 					<div className="space-y-2">
-						<label htmlFor="json-input" className="text-sm font-medium">
-							Input JSON
-						</label>
+						<div className="flex items-center justify-between">
+							<label htmlFor="json-input" className="text-sm font-medium">
+								Input JSON
+							</label>
+							<div className="flex gap-2">
+								<CopyButton value={input} />
+								<TooltipProvider>
+									<Tooltip>
+										<TooltipTrigger asChild>
+											<Button
+												variant="outline"
+												size="icon"
+												onClick={minifyJson}
+												className="shrink-0"
+											>
+												<Minimize2 className="h-4 w-4" />
+											</Button>
+										</TooltipTrigger>
+										<TooltipContent>
+											<p>Minify JSON</p>
+										</TooltipContent>
+									</Tooltip>
+								</TooltipProvider>
+							</div>
+						</div>
 						<Textarea
 							id="json-input"
 							placeholder="Paste your JSON here..."
@@ -51,9 +93,12 @@ export function JsonPrettifierCard({ className }: JsonPrettifierCardProps) {
 						/>
 					</div>
 					<div className="space-y-2">
-						<label htmlFor="json-output" className="text-sm font-medium">
-							Prettified Output
-						</label>
+						<div className="flex items-center justify-between">
+							<label htmlFor="json-output" className="text-sm font-medium">
+								Prettified Output
+							</label>
+							<CopyButton value={output} />
+						</div>
 						<Textarea
 							id="json-output"
 							readOnly
