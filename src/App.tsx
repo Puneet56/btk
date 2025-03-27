@@ -6,6 +6,7 @@ import { ScrollToBottom } from "./components/ScrollToBottom";
 import { HomePage } from "./pages/HomePage";
 import { JsonPrettifierPage } from "./pages/JsonPrettifierPage";
 import { UrlDecoderPage } from "./pages/UrlDecoderPage";
+import { UserAgentParserPage } from "./pages/UserAgentParserPage";
 
 function App() {
 	return (
@@ -16,6 +17,7 @@ function App() {
 					<Route path="/" element={<HomePage />} />
 					<Route path="/json-prettifier" element={<JsonPrettifierPage />} />
 					<Route path="/url-decoder" element={<UrlDecoderPage />} />
+					<Route path="/user-agent-parser" element={<UserAgentParserPage />} />
 				</Routes>
 			</main>
 			<Footer />
