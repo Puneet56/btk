@@ -1,4 +1,4 @@
-# BTK - Backend Toolkit
+# Backend Toolkit
 
 A collection of handy tools for developers built with React, TypeScript, and Tailwind CSS.
 
@@ -12,6 +12,7 @@ A collection of handy tools for developers built with React, TypeScript, and Tai
 - IP Display
 - IP Info Lookup
 - Json Prettifier
+- User Agent Decoder
 
 ## Tech Stack
 
@@ -25,7 +26,7 @@ A collection of handy tools for developers built with React, TypeScript, and Tai
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/Puneet56/btk.git
+git clone https://github.com/Puneet56/backend-toolkit.git
 ```
 
 2. Install dependencies:
@@ -54,5 +55,5 @@ MIT License
 
 ## Links
 
-- [GitHub Repository](https://github.com/Puneet56/btk)
-- [Report an Issue](https://github.com/Puneet56/btk/issues)
+- [GitHub Repository](https://github.com/Puneet56/backend-toolkit)
+- [Report an Issue](https://github.com/Puneet56/backend-toolkit/issues)

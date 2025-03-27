@@ -1,5 +1,5 @@
 // GitHub URLs
-export const GITHUB_REPO_URL = "https://github.com/Puneet56/btk";
+export const GITHUB_REPO_URL = "https://github.com/Puneet56/backend-toolkit";
 export const GITHUB_PROFILE_URL = "https://github.com/Puneet56";
 
 // API Endpoints
