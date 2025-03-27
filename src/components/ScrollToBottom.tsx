@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 
 export function ScrollToBottom() {
-	const [show, setShow] = useState(false);
+	const [show, setShow] = useState<boolean>(false);
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -16,7 +16,9 @@ export function ScrollToBottom() {
 		window.addEventListener("scroll", handleScroll);
 		handleScroll(); // Check initial state
 
-		return () => window.removeEventListener("scroll", handleScroll);
+		return () => {
+			window.removeEventListener("resize", handleScroll);
+		};
 	}, []);
 
 	const scrollToBottom = () => {

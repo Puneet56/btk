@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { RegenerateButton } from "@/components/ui/regenerate-button";
 import { useCallback, useEffect, useState } from "react";
 
@@ -52,25 +53,31 @@ export function MongoidTimestampCard() {
 				<CardTitle>MongoDB ID to Timestamp</CardTitle>
 			</CardHeader>
 			<CardContent className="space-y-4">
-				<div className="flex gap-2">
-					<Input
-						value={mongoid}
-						onChange={(e) => handleMongoidChange(e.target.value)}
-						placeholder="Enter MongoDB ObjectId"
-						className="font-mono"
-					/>
-					<RegenerateButton onClick={generateNewId} />
+				<div className="space-y-2">
+					<Label htmlFor="mongoid">MongoDB ObjectId</Label>
+					<div className="flex gap-2">
+						<Input
+							value={mongoid}
+							onChange={(e) => handleMongoidChange(e.target.value)}
+							placeholder="Enter MongoDB ObjectId"
+							className="font-mono"
+						/>
+						<RegenerateButton onClick={generateNewId} />
+					</div>
 				</div>
-				<div className="flex gap-2">
-					<Input
-						value={generateTimestampFromMongoId(mongoid).toISOString()}
-						readOnly
-						placeholder="Timestamp will appear here"
-						className="font-mono text-lg"
-					/>
-					<CopyButton
-						value={generateTimestampFromMongoId(mongoid).toISOString()}
-					/>
+				<div className="space-y-2">
+					<Label htmlFor="timestamp">Timestamp</Label>
+					<div className="flex gap-2">
+						<Input
+							value={generateTimestampFromMongoId(mongoid).toISOString()}
+							readOnly
+							placeholder="Timestamp will appear here"
+							className="font-mono text-lg"
+						/>
+						<CopyButton
+							value={generateTimestampFromMongoId(mongoid).toISOString()}
+						/>
+					</div>
 				</div>
 			</CardContent>
 		</Card>

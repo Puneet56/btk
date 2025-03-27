@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
 	Tooltip,
 	TooltipContent,
@@ -94,9 +95,9 @@ export function UtcTimeCard() {
 			</CardHeader>
 			<CardContent className="space-y-4">
 				<div className="space-y-2">
-					<label htmlFor="utc-time" className="text-sm font-medium">
+					<Label htmlFor="utc-time" className="text-sm font-medium">
 						ISO 8601
-					</label>
+					</Label>
 					<div className="flex gap-2">
 						<Input
 							id="utc-time"
@@ -108,9 +109,9 @@ export function UtcTimeCard() {
 					</div>
 				</div>
 				<div className="space-y-2">
-					<label htmlFor="unix-time" className="text-sm font-medium">
+					<Label htmlFor="unix-time" className="text-sm font-medium">
 						Unix Timestamp
-					</label>
+					</Label>
 					<div className="flex gap-2">
 						<Input
 							id="unix-time"

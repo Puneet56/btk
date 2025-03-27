@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { API_ENDPOINTS } from "@/constants/urls";
 import { useQuery } from "@tanstack/react-query";
 
@@ -42,12 +43,7 @@ export const IpDisplayCard = () => {
 			</CardHeader>
 			<CardContent className="space-y-4">
 				<div className="space-y-2">
-					<label
-						htmlFor="ipv4"
-						className="text-sm font-medium text-muted-foreground"
-					>
-						IPv4
-					</label>
+					<Label htmlFor="ipv4">IPv4</Label>
 					<div className="flex gap-2">
 						<Input
 							id="ipv4"
@@ -60,12 +56,7 @@ export const IpDisplayCard = () => {
 				</div>
 				{showIpv6 && (
 					<div className="space-y-2">
-						<label
-							htmlFor="ipv6"
-							className="text-sm font-medium text-muted-foreground"
-						>
-							IPv6
-						</label>
+						<Label htmlFor="ipv6">IPv6</Label>
 						<div className="flex gap-2">
 							<Input
 								id="ipv6"

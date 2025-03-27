@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
+import { Label } from "@/components/ui/label";
 import { RegenerateButton } from "@/components/ui/regenerate-button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -47,12 +48,7 @@ export function UrlDecoderCard({ className }: { className?: string }) {
 			</CardHeader>
 			<CardContent className="space-y-4">
 				<div className="space-y-2">
-					<label
-						htmlFor="encoded"
-						className="text-sm font-medium text-muted-foreground"
-					>
-						Encoded URL
-					</label>
+					<Label htmlFor="encoded">Encoded URL</Label>
 					<div className="flex gap-2">
 						<Textarea
 							id="encoded"
@@ -73,12 +69,7 @@ export function UrlDecoderCard({ className }: { className?: string }) {
 					</div>
 				</div>
 				<div className="space-y-2">
-					<label
-						htmlFor="decoded"
-						className="text-sm font-medium text-muted-foreground"
-					>
-						Decoded URL
-					</label>
+					<Label htmlFor="decoded">Decoded URL</Label>
 					<div className="flex gap-2">
 						<Textarea
 							id="decoded"

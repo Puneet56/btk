@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
 	Tooltip,
@@ -57,9 +58,9 @@ export function JsonPrettifierCard({ className }: JsonPrettifierCardProps) {
 				<div className="grid grid-cols-2 gap-8">
 					<div className="space-y-2">
 						<div className="flex items-center justify-between">
-							<label htmlFor="json-input" className="text-sm font-medium">
+							<Label htmlFor="json-input" className="text-sm font-medium">
 								Input JSON
-							</label>
+							</Label>
 							<div className="flex gap-2">
 								<CopyButton value={input} />
 								<TooltipProvider>
@@ -94,9 +95,9 @@ export function JsonPrettifierCard({ className }: JsonPrettifierCardProps) {
 					</div>
 					<div className="space-y-2">
 						<div className="flex items-center justify-between">
-							<label htmlFor="json-output" className="text-sm font-medium">
+							<Label htmlFor="json-output" className="text-sm font-medium">
 								Prettified Output
-							</label>
+							</Label>
 							<CopyButton value={output} />
 						</div>
 						<Textarea
