@@ -17,6 +17,9 @@ export interface ParsedUserAgent {
 		name: string;
 		version: string;
 	};
+	cpu: {
+		architecture: string;
+	};
 }
 
 export function parseUserAgent(userAgentString: string): ParsedUserAgent {
@@ -39,6 +42,9 @@ export function parseUserAgent(userAgentString: string): ParsedUserAgent {
 		engine: {
 			name: result.engine.name || "Unknown",
 			version: result.engine.version || "Unknown",
+		},
+		cpu: {
+			architecture: result.cpu.architecture || "Unknown",
 		},
 	};
 }

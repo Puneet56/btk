@@ -67,7 +67,7 @@ export function IpInfoCard({ className }: IpInfoCardProps) {
 	const { data, isLoading, error, refetch } = useQuery({
 		queryKey: ["ipInfo"],
 		queryFn: () => fetchIpInfo(targetIp),
-		enabled: !!targetIp,
+		enabled: process.env.NODE_ENV !== "development",
 		retry: false,
 		placeholderData: {
 			ipVersion: 4,
