@@ -7,31 +7,99 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { useState, useEffect } from "react";
-import type { ParsedUserAgent } from "./utils";
 import { parseUserAgent } from "./utils";
 import { CopyButton } from "@/components/ui/copy-button";
 
+const sampleUserAgents = [
+	{
+		label: "Windows (Chrome)",
+		user_agent:
+			"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+	},
+	{
+		label: "macOS (Safari)",
+		user_agent:
+			"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15",
+	},
+	{
+		label: "macOS (Firefox)",
+		user_agent:
+			"Mozilla/5.0 (Macintosh; Intel Mac OS X 14.6; rv:127.0) Gecko/20100101 Firefox/127.0",
+	},
+	{
+		label: "Linux (Chrome)",
+		user_agent:
+			"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+	},
+	{
+		label: "Android (Chrome)",
+		user_agent:
+			"Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36",
+	},
+	{
+		label: "iOS (Safari)",
+		user_agent:
+			"Mozilla/5.0 (iPhone; CPU iPhone OS 17_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
+	},
+	{
+		label: "iOS (Chrome)",
+		user_agent:
+			"Mozilla/5.0 (iPhone; CPU iPhone OS 17_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/125.0.0.0 Mobile/15E148 Safari/604.1",
+	},
+	{
+		label: "Android Tablet (Chrome)",
+		user_agent:
+			"Mozilla/5.0 (Linux; Android 13; SM-X900) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+	},
+	{
+		label: "iPad (Safari)",
+		user_agent:
+			"Mozilla/5.0 (iPad; CPU OS 17_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
+	},
+	{
+		label: "Googlebot",
+		user_agent:
+			"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+	},
+	{
+		label: "Edge (Windows)",
+		user_agent:
+			"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0",
+	},
+];
+
 export function UserAgentParser() {
 	const [userAgent, setUserAgent] = useState("");
-	const [parsedInfo, setParsedInfo] = useState<ParsedUserAgent | null>(null);
+	const [selectedSample, setSelectedSample] = useState("");
 
 	useEffect(() => {
 		const currentUserAgent = navigator.userAgent;
 		setUserAgent(currentUserAgent);
-		setParsedInfo(parseUserAgent(currentUserAgent));
 	}, []);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value;
 		setUserAgent(value);
-		if (value) {
-			const parsed = parseUserAgent(value);
-			setParsedInfo(parsed);
-		} else {
-			setParsedInfo(null);
+		setSelectedSample("");
+	};
+
+	const handleSampleSelect = (value: string) => {
+		setSelectedSample(value);
+		const selected = sampleUserAgents.find((sample) => sample.label === value);
+		if (selected) {
+			setUserAgent(selected.user_agent);
 		}
 	};
+
+	const parsedInfo = parseUserAgent(userAgent);
 
 	return (
 		<div className="container mx-auto p-4 space-y-4">
@@ -52,7 +120,20 @@ export function UserAgentParser() {
 								placeholder="Enter a user agent string..."
 								value={userAgent}
 								onChange={handleInputChange}
+								className="flex-1"
 							/>
+							<Select value={selectedSample} onValueChange={handleSampleSelect}>
+								<SelectTrigger className="w-[200px]">
+									<SelectValue placeholder="Sample User Agents" />
+								</SelectTrigger>
+								<SelectContent>
+									{sampleUserAgents.map((sample) => (
+										<SelectItem key={sample.label} value={sample.label}>
+											{sample.label}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
 							<CopyButton value={userAgent} tooltipTitle="Copy User Agent" />
 						</div>
 					</div>
