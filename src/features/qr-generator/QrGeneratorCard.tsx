@@ -13,7 +13,7 @@ function generateRandomUrl() {
 
 export function QrGeneratorCard({ className }: { className?: string }) {
 	const [url, setUrl] = useState<string>(GITHUB_REPO_URL);
-
+	const [isHoverd, setIsHoverd] = useState<boolean>(false);
 	const handleUrlChange = (value: string) => {
 		setUrl(value);
 	};
@@ -46,12 +46,15 @@ export function QrGeneratorCard({ className }: { className?: string }) {
 				</div>
 				<div className="flex justify-center">
 					{url && (
-						<div className="p-2 bg-white rounded-lg w-full h-full">
+						<div className="rounded-lg overflow-clip w-full h-full">
 							<QRCodeSVG
 								value={url}
 								className="w-full h-full"
 								level="H"
+								bgColor={isHoverd ? "#c0c0c0" : "#ffffff26"}
 								includeMargin={true}
+								onMouseEnter={() => setIsHoverd(true)}
+								onMouseLeave={() => setIsHoverd(false)}
 							/>
 						</div>
 					)}
