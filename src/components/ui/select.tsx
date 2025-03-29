@@ -1,6 +1,20 @@
 import * as SelectPrimitive from "@radix-ui/react-select";
+
+import {
+  ChangeEvent,
+  Children,
+  ComponentProps,
+  ReactElement,
+  cloneElement,
+  isValidElement,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
+import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 function Select({
@@ -47,40 +61,6 @@ function SelectTrigger({
 	);
 }
 
-function SelectContent({
-	className,
-	children,
-	position = "popper",
-	...props
-}: React.ComponentProps<typeof SelectPrimitive.Content>) {
-	return (
-		<SelectPrimitive.Portal>
-			<SelectPrimitive.Content
-				data-slot="select-content"
-				className={cn(
-					"bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border shadow-md",
-					position === "popper" &&
-						"data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-					className,
-				)}
-				position={position}
-				{...props}
-			>
-				<SelectScrollUpButton />
-				<SelectPrimitive.Viewport
-					className={cn(
-						"p-1",
-						position === "popper" &&
-							"h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1",
-					)}
-				>
-					{children}
-				</SelectPrimitive.Viewport>
-				<SelectScrollDownButton />
-			</SelectPrimitive.Content>
-		</SelectPrimitive.Portal>
-	);
-}
 
 function SelectLabel({
 	className,
@@ -94,6 +74,133 @@ function SelectLabel({
 		/>
 	);
 }
+
+function  SelectContent({
+    className,
+    children,
+    position = "popper",
+    ...props
+  }: ComponentProps<typeof SelectPrimitive.Content>) {
+    const [search, setSearch] = useState("");
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [selectedValue, setSelectedValue] = useState<string | null>(null);
+  
+    // Memoized filtered children
+    const filteredChildren = useMemo(() => {
+      const filtered = Children.toArray(children).filter(
+        child =>
+          isValidElement(child) &&
+          child.props.children?.toLowerCase().includes(search.toLowerCase())
+      );
+  
+      // Ensure selected value remains visible even if search filters it out
+      if (selectedValue) {
+        const selectedOption = Children.toArray(children).find(
+          child => isValidElement(child) && child.props.value === selectedValue
+        );
+  
+        if (selectedOption && !filtered.includes(selectedOption)) {
+          filtered.unshift(selectedOption);
+        }
+      }
+      return filtered;
+    }, [children, search, selectedValue]);
+  
+    // Restore focus on input after list changes
+    useEffect(() => {
+      setTimeout(() => inputRef.current?.focus(), 0);
+    }, [search]);
+  
+    // Handle Search Input
+    const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setSearch(e.target.value);
+    };
+  
+    // Clear search and preserve selected value
+    const handleSelect = (value: string) => {
+      setSelectedValue(value);
+      setSearch(""); // Reset search to show full list
+      setTimeout(() => inputRef.current?.focus(), 0);
+    };
+  
+    // Handle dropdown open/close state
+  
+    return (
+      <SelectPrimitive.Portal>
+        <SelectPrimitive.Content
+          data-slot="select-content"
+          className={cn(
+            "bg-popover text-popover-foreground relative z-50 max-h-[var(--radix-select-content-available-height)] min-w-[8rem] origin-[var(--radix-select-content-transform-origin)] overflow-x-hidden overflow-y-auto rounded-md border shadow-md",
+            position === "popper" &&
+              "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+            className
+          )}
+          position={position}
+          onEscapeKeyDown={() => {
+            setSearch("");
+          }} // Close on escape
+          onPointerDownOutside={() => {
+            setSearch("");
+          }} // Close on outside click
+          {...props}>
+          {/* Search Input */}
+          <div className="relative p-2">
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="Search..."
+              value={search}
+              onChange={handleSearchChange}
+              className="w-full px-3 py-1.5 text-sm bg-white border rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+              onPointerDown={e => e.stopPropagation()} // Prevent dropdown close
+            />
+            {search && (
+              <button
+                type="button"
+                onClick={() => setSearch("")}
+                className="absolute right-4 top-3 text-gray-500 hover:text-gray-800">
+                <X size={16} />
+              </button>
+            )}
+          </div>
+  
+          <SelectScrollUpButton />
+  
+          <SelectPrimitive.Viewport
+            className={cn(
+              "p-1",
+              position === "popper" &&
+                "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1"
+            )}>
+            {/* Render filtered options */}
+            {filteredChildren.length > 0 ? (
+              filteredChildren.map((child, index) =>
+                cloneElement(child as ReactElement, {
+                  key: index,
+                  onClick: (e: any) => {
+                    e.preventDefault(); // Prevent dropdown from closing
+                    handleSelect(child.props.value);
+                  }
+                })
+              )
+            ) : // Ensure selected value remains visible even when search is empty
+            selectedValue ? (
+              <div className="p-2 text-sm font-medium text-gray-700">
+                {Children.toArray(children).find(
+                  child =>
+                    isValidElement(child) && child.props.value === selectedValue
+                )?.props.children || "No options found"}
+              </div>
+            ) : (
+              <div className="p-2 text-sm text-gray-500">No options found</div>
+            )}
+          </SelectPrimitive.Viewport>
+  
+          <SelectScrollDownButton />
+        </SelectPrimitive.Content>
+      </SelectPrimitive.Portal>
+    );
+  }
 
 function SelectItem({
 	className,
@@ -170,7 +277,6 @@ function SelectScrollDownButton({
 
 export {
 	Select,
-	SelectContent,
 	SelectGroup,
 	SelectItem,
 	SelectLabel,
@@ -179,4 +285,5 @@ export {
 	SelectSeparator,
 	SelectTrigger,
 	SelectValue,
+    SelectContent
 };

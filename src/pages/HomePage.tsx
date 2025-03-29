@@ -2,6 +2,7 @@ import { IpDisplayCard } from "@/features/ip-display/IpDisplayCard";
 import { IpInfoCard } from "@/features/ip-info/IpInfoCard";
 import { MongoidTimestampCard } from "@/features/mongoid-timestamp/MongoidTimestampCard";
 import { QrGeneratorCard } from "@/features/qr-generator/QrGeneratorCard";
+import TimezoneConverter from "@/features/timezone-converter";
 import { UtcTimeCard } from "@/features/utc-time/UtcTimeCard";
 import { UuidGenerator } from "@/features/uuid-generator/UuidGenerator";
 
@@ -14,6 +15,7 @@ export function HomePage() {
 			<QrGeneratorCard className="row-span-2" />
 			<IpInfoCard className="row-span-2" />
 			<IpDisplayCard />
+            <TimezoneConverter />
 		</div>
 	);
 }
